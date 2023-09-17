@@ -88,7 +88,7 @@ mod expand;
 /// Instruments a function to create and enter a `tracing` [span] every time
 /// the function is called.
 ///
-/// Unless overriden, a span with `info` level will be generated.
+/// Unless overridden, a span with `info` level will be generated.
 /// The generated span's name will be the name of the function.
 /// By default, all arguments to the function are included as fields on the
 /// span. Arguments that are `tracing` [primitive types] implementing the
@@ -474,18 +474,7 @@ impl From<ItemFn> for MaybeItemFn {
             .into_iter()
             .partition(|attr| attr.style == syn::AttrStyle::Outer);
         Self {
-            outer_attrs,
-            inner_attrs,
-            vis,
-            sig,
-            block: block.to_token_stream(),
-        }
-    }
-}
-
-/// A generic reference type for `MaybeItemFn`,
-/// that takes a generic block type `B` that implements `ToTokens` (eg. `TokenStream`, `Block`).
-#[derive(Debug, Clone)]
+            outer_attrs,overridden
 struct MaybeItemFnRef<'a, B: ToTokens> {
     outer_attrs: &'a Vec<Attribute>,
     inner_attrs: &'a Vec<Attribute>,
